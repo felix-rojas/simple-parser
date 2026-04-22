@@ -56,6 +56,16 @@ class Add(Numeric):
         right = float(self.right.eval(env))
         return left + right
 
+class Subtract(Numeric):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def eval(self, env):
+        left = float(self.left.eval(env))
+        right = float(self.right.eval(env))
+        return left - right
+
 class Multiply(Numeric):
     def __init__(self, left, right):
         self.left = left
@@ -145,3 +155,55 @@ class LargerEqual(Logic):
         left = float(self.left.eval(env))
         right = float(self.right.eval(env))
         return left >= right
+
+class Equal(Logic):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+    def eval(self, env):
+        return self.left.eval(env) == self.right.eval(env)
+
+class NotEqual(Logic):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+    def eval(self, env):
+        return self.left.eval(env) != self.right.eval(env)
+
+class And(Logic):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+    def eval(self, env):
+        return bool(self.left.eval(env)) and bool(self.right.eval(env))
+
+class Or(Logic):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+    def eval(self, env):
+        return bool(self.left.eval(env)) or bool(self.right.eval(env))
+
+# --- Void classes ---
+class Print(Void):
+    def __init__(self,expression):
+        self.expression = expression
+    def eval(self,env):
+        result = self.expression.eval(env)
+        print(result)
+
+class Assignment(Void):
+    def __init__(self,expression):
+        self.expression = expression
+    def eval(self,env):
+        result = self.expression.eval(env)
+        _type = None
+        if isinstance(self.expression,Numeric):
+            _type = Type.NUMBER
+            value = float(result)
+        else:
+            _type = Type.BOOLEAN
+            value = bool(result)
+        if not(env.set(self.id,_type,value)):
+            text = f"Variable at line {line} was not declared"
+            raise Exception(text)
