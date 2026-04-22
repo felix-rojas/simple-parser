@@ -62,7 +62,7 @@ class Parser:
 		self.token = self.lex.scan()
 		tree = self.program()
 		if self.token.tag == Tag.EOF:
-			tree.eval(self.env)
+			tree.eval(self.current_table)
 	
 	#<primary-expression> ::= <identifier> || <number> || <true>	|| <false> ||  '(' <expression> ')'
 	def primaryExpression(self):
@@ -115,7 +115,7 @@ class Parser:
 			if self.token.tag == ord('*'):
 				self.check(ord('*'))
 				right = self.unaryExpression()
-				node = Mutiply(left,right)
+				node = Multiply(left,right)
 				self.extendedMultiplicativeExpression(node)
 			elif self.token.tag == ord('/'):
 				self.check(ord('/'))
@@ -154,7 +154,7 @@ class Parser:
 				node = Subtract(left,right)
 				return self.extendedAdditiveExpression(node)
 		else:
-			pass
+			return left
 
 	#<additive-expression> ::= <multiplicative-expression> <extended-additive-expression>
 	def additiveExpression(self):
