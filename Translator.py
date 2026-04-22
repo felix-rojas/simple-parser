@@ -29,15 +29,14 @@ class Identifier(Numeric):
     def __init__(self, name, line):
         self.name = name
         self.line = line
-
+    
     def eval(self, env):
         result = env.lookup(self.name)
         if result != None:
             (_, value) = result
+            if value is None:
+                 raise Exception("Line " + str(self.line) + " - " + self.name + " is uninitialized")
             return value
-        else: 
-            text = "Line " + str(self.line) + " - " + self.name + " has not been declared"
-            raise Exception(text)
 
 class Minus(Numeric):
     def __init__(self, right):
