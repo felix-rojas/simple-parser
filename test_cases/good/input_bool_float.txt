@@ -1,0 +1,5 @@
+VAR a, b
+a := #T + 5
+b := #F < 1
+PRINT (a)
+PRINT (b)

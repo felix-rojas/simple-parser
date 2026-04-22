@@ -1,0 +1,5 @@
+VAR num, zero, result
+num := 10
+zero := 0
+result := num / zero
+PRINT (result)

@@ -1,0 +1,5 @@
+VAR x, y
+x := ---5
+y := !!#T
+PRINT(x)
+PRINT(y)
