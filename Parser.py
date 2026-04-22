@@ -157,7 +157,7 @@ class Parser:
 			pass
 
 	#<additive-expression> ::= <multiplicative-expression> <extended-additive-expression>
-	def additiveExpression(self,left):
+	def additiveExpression(self):
 		if self.token.tag in self.firstAdditiveExpression:
 			left = self.multiplicativeExpression()
 			return self.extendedAdditiveExpression(left)
@@ -169,7 +169,7 @@ class Parser:
 	#<extended-relational-expression> := '>' <additive-expression> <extended-relational-expression>
 	#<extended-relational-expression> ::= '>''=' <additive-expression> <extended-relational-expression>
 	#<extended-relational-expression> ::= ' '
-	def extendedRelationalExpression(self):
+	def extendedRelationalExpression(self,left):
 		if self.token.tag in self.firstExtendedRelationalExpression:
 			if self.token.tag == ord('<'):
 				self.check(ord('<'))
