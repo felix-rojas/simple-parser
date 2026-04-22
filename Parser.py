@@ -3,10 +3,12 @@ from Lexer import *
 class Parser:
 	lex = None
 	token = None
+	current_table = None
 
 	def __init__(self, filepath):
 		self.lex = Lexer(filepath)
 		self.token = None
+		self.current_table = None
 
 		""" DEFINE FIRST SET """
 		self.firstPrimaryExpression = set((Tag.ID, Tag.NUMBER, Tag.TRUE, Tag.FALSE, ord('(')))
@@ -55,10 +57,11 @@ class Parser:
 			self.error(text)
 	
 	def analize(self):
+		self.current_table = SymbolTable()
 		self.token = self.lex.scan()
-		self.program()
+		tree = self.program()
 		if self.token.tag == Tag.EOF:
-			print("ACCEPTED")
+			tree.eval(self.env)
 	
 	#<primary-expression> ::= <identifier> || <number> || <true>	|| <false> ||  '(' <expression> ')'
 	def primaryExpression(self):
