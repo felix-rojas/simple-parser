@@ -160,7 +160,7 @@ class Parser:
 	def additiveExpression(self,left):
 		if self.token.tag in self.firstAdditiveExpression:
 			left = self.multiplicativeExpression()
-			return self.extendedAdditiveExpression(node)
+			return self.extendedAdditiveExpression(left)
 		else:
 			self.error("expected an additive expression before " + str(self.token))
 
