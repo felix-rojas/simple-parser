@@ -6,7 +6,7 @@ if __name__ == '__main__':
     print("---------------------------------------")
     print("Testing good cases (should compile)")
     print("---------------------------------------")
-    for file in glob.glob('test_cases/good/input*.txt'):
+    for file in glob.glob('test_cases/good/*.txt'):
         print(f"Parsing {file}")
         try:
             parser = Parser(file)
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     print("---------------------------------------")
     print("Testing bad cases (should throw error)")
     print("---------------------------------------")
-    for file in glob.glob('test_cases/bad/input*.txt'):
+    for file in glob.glob('test_cases/bad/*.txt'):
         print(f"Parsing {file}")
         try:
             parser = Parser(file)
