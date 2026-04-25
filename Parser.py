@@ -1,5 +1,6 @@
 from Lexer import *
 from Translator import *
+from Numeric import *
 
 class Parser:
 	lex = None
@@ -123,12 +124,14 @@ class Parser:
 			elif self.token.tag == ord('/'):
 				self.check(ord('/'))
 				right = self.unaryExpression()
-				node = Divide(left, right)
+				line = self.lex.line
+				node = Divide(left, right, line)
 				return self.extendedMultiplicativeExpression(node)
 			elif self.token.tag == Tag.MOD:
 				self.check(Tag.MOD)
 				right = self.unaryExpression()
-				node = Modulo(left, right)
+				line = self.lex.line
+				node = Modulo(left, right, line)
 				return self.extendedMultiplicativeExpression(node)
 		else:
 			return left
